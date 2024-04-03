@@ -9,6 +9,8 @@
 </head>
 
 <body>
+
+
     <a href="{{ route('index_product') }}">Back to Index Product</a>
     <p>Name: {{ $product->name }}</p>
     <p>Description: {{ $product->description }}</p>
@@ -25,6 +27,12 @@
         <input type="number" name="amount" value="1">
         <button type="submit">Add to Cart</button>
     </form>
+
+    @if ($errors->any())
+    @foreach ($errors->all as $error)
+    <p>{{ $error }}</p>
+    @endforeach
+    @endif
 </body>
 
 </html>
