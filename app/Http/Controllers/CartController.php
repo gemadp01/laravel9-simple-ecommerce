@@ -17,7 +17,7 @@ class CartController extends Controller
     public function add_to_cart(Product $product, Request $request) {
 
         $request->validate([
-            'amount' => 'required|gte:1'
+            'amount' => 'required|gte:1|lte:'. $product->stock
         ]);
 
         $user_id = Auth::id();
@@ -36,5 +36,17 @@ class CartController extends Controller
         $user_id = Auth::id();
         $carts = Cart::where('user_id', $user_id)->get();
         return view('show_cart', ['carts' => $carts]);
+    }
+
+    public function update_cart(Cart $cart, Request $request) {
+        $request->validate([
+            'amount' => 'required|gte:1|lte:'. $cart->product->stock,
+        ]);
+
+        $cart->update([
+            'amount' => $request->amount
+        ]);
+
+        return Redirect::route('show_cart');
     }
 }
