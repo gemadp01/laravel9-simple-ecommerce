@@ -41,7 +41,7 @@ class OrderController extends Controller
         }
 
 
-        return Redirect::back();
+        return Redirect::route('show_order', $order);
     }
 
     public function index_order() {
