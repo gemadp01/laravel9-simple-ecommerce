@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Transaction;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -86,5 +88,24 @@ class OrderController extends Controller
         ]);
 
         return Redirect::back();
+    }
+
+    public function export_to_pdf() {
+        $user = Auth::user();
+
+        $order = Order::where('user_id', $user->id)->first();
+
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+
+        $dompdf = new Dompdf($options);
+
+        $pdfView = view('pdf.invoice', compact('order'));
+        $dompdf->loadHtml($pdfView);
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+        return $dompdf->stream('invoice' . $order->id . '.pdf');
     }
 }

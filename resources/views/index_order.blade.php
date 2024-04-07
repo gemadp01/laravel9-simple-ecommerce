@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Orders') }}</div>
 
+
                 <div class="card-body m-auto">
                     @foreach ($orders as $order)
                     <div class="card mb-2" style="width: 30rem;">

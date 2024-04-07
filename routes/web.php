@@ -50,6 +50,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order/{order}', [OrderController::class, 'show_order'])->name('show_order');
     Route::post('/order/{order}/pay/', [OrderController::class, 'submit_payment_receipt'])->name('submit_payment_receipt');
 
+    Route::get('/export-to-pdf', [OrderController::class, 'export_to_pdf'])->name('export_to_pdf');
+    // Route::get('/order/export-pdf', function() {
+    //     return view('pdf.invoice');
+    // });
+
+
+
     Route::get('/profile', [ProfileController::class, 'show_profile'])->name('show_profile');
     Route::post('/profile', [ProfileController::class, 'edit_profile'])->name('edit_profile');
 });

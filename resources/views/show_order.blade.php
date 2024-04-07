@@ -5,7 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Order Detail') }}</div>
+                <div class="card-header d-flex justify-content-between">{{ __('Order Detail') }}
+                    @if (!Auth::user()->is_admin)
+                    <a href="{{ route('export_to_pdf') }}" class="btn btn-primary">Export to Pdf</a>
+                    @endif
+                </div>
+
 
                 @php
                 $total_price = 0;
